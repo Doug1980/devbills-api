@@ -6,6 +6,7 @@
     "lib": [
       "ES2020"
     ], // Permite usar funcionalidades da linguagem baseadas no ES2021
+    "types": ["node"],
     "rootDir": "src", // Diretório onde está o código-fonte (entrada)
     "outDir": "dist", // Diretório onde os arquivos compilados serão salvos (saída)
     "resolveJsonModule": true, // Permite importar arquivos .json como módulos (útil para config, Firebase etc)
