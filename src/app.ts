@@ -1,9 +1,11 @@
 import Fastify from "fastify";
 import type { FastifyInstance } from "fastify";
+import { env } from "./config/env";
 import routes from "./routes"
 
 const app: FastifyInstance = Fastify({
-    logger: true
+    logger: true,
+    level: env.NODE_ENV === "dev" ? "info" : "error",
 })
 
 

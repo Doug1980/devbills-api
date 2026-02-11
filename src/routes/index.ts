@@ -1,5 +1,6 @@
 import { FastifyInstance } from "fastify"
 import categoryRouters from "./category.routes"
+import transactionsRoutes from "./transaction.routes";
 
 async function routes(fastify: FastifyInstance): Promise<void> {
 
@@ -11,6 +12,7 @@ async function routes(fastify: FastifyInstance): Promise<void> {
     })
 
     fastify.register(categoryRouters, {prefix: "/categories"});
+    fastify.register(transactionsRoutes, { prefix: "/transactions" });
 }
 
 export default routes

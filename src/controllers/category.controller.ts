@@ -17,6 +17,4 @@ export const getCategories = async ( request: FastifyRequest, reply: FastifyRepl
         reply.status(500).send({error: "error ao buscar Categorias"})
     }
 
-
-
 };
