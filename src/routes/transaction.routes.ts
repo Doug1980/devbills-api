@@ -1,15 +1,18 @@
 import type { FastifyInstance } from "fastify";
 import { zodToJsonSchema } from "zod-to-json-schema";
-import createTransaction from "../controllers/createTransaction.controller";
-import { getTransactions } from "../controllers/getTransactions.controller";
-import { getTransactionsSummary } from "../controllers/getTransactionsSummary.controller";
+import createTransaction from "../controllers/transactions/createTransaction.controller";
+import { deleteTransaction } from "../controllers/transactions/deleteTransaction.controller";
+import { getTransactions } from "../controllers/transactions/getTransactions.controller";
+import { getTransactionsSummary } from "../controllers/transactions/getTransactionsSummary.controller";
 
-import { createTransactionSchema, getTransactionsSchema, getTransactionsSummarySchema } from "../schemas/transaction.schema";
 
-const transactionsRoutes = async(fastify: FastifyInstance) => {
+import { createTransactionSchema, deleteTransactionSchema, getTransactionsSchema, getTransactionsSummarySchema } from "../schemas/transaction.schema";
+
+
+const transactionsRoutes = async (fastify: FastifyInstance) => {
 
     //Criate
-    fastify.route({ 
+    fastify.route({
         method: "POST",
         url: "/",
         schema: {
@@ -39,8 +42,15 @@ const transactionsRoutes = async(fastify: FastifyInstance) => {
         handler: getTransactionsSummary,
     });
 
+    //Deletar
+    fastify.route({
+        method: "DELETE",
+        url: "/:id",
+        schema: {
+            params: zodToJsonSchema(deleteTransactionSchema)
+        },
+        handler: deleteTransaction,
+    });
 };
-
-
 
 export default transactionsRoutes;

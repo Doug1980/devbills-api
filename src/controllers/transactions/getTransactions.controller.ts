@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
 import type { FastifyReply, FastifyRequest } from "fastify";
-import type { GetTransactionsQuery } from "../schemas/transaction.schema";
-import type {TransactionFilter} from "../types/transaction.type";
-import prisma from "../config/prisma";
+import type { GetTransactionsQuery } from "../../schemas/transaction.schema";
+import type {TransactionFilter} from "../../types/transaction.type";
+import prisma from "../../config/prisma";
 import utc from 'dayjs/plugin/utc';
 
 // Ative o plugin
