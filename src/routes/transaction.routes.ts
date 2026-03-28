@@ -5,6 +5,11 @@ import { deleteTransaction } from "../controllers/transactions/deleteTransaction
 import { getTransactions } from "../controllers/transactions/getTransactions.controller";
 import { getTransactionsSummary } from "../controllers/transactions/getTransactionsSummary.controller";
 import { authMiddleware } from "../middlewares/auth.middlewares";
+import { updateTransaction } from "../controllers/transactions/updateTransaction.controller";
+import {
+	updateTransactionSchema,
+	updateTransactionBodySchema,
+} from "../schemas/transaction.schema";
 
 import {
 	createTransactionSchema,
@@ -17,6 +22,17 @@ import {
 import { getHistoricalTransactions } from "../controllers/transactions/getHistoricalTransactions.controller";
 
 const transactionsRoutes = async (fastify: FastifyInstance) => {
+	// ✅ adicionar junto às outras rotas, antes do fechamento da função
+	fastify.route({
+		method: "PUT",
+		url: "/:id",
+		schema: {
+			params: zodToJsonSchema(updateTransactionSchema),
+			body: zodToJsonSchema(updateTransactionBodySchema),
+		},
+		handler: updateTransaction,
+	});
+
 	fastify.addHook("preHandler", authMiddleware);
 
 	//Criate

@@ -59,3 +59,23 @@ export type GetTransactionsSummaryQuery = z.infer<
 	typeof getTransactionsSummarySchema
 >;
 export type DeleteTransactionParams = z.infer<typeof deleteTransactionSchema>;
+
+// ✅ adicionar ao final do arquivo, antes dos tipos inferidos
+export const updateTransactionSchema = z.object({
+	id: z.string().refine(isValidObjectId, { message: "ID Inválido" }),
+});
+
+export const updateTransactionBodySchema = z.object({
+	description: z.string().min(1, "Descrição obrigatória").optional(),
+	amount: z.number().positive("Valor deve ser positivo").optional(),
+	date: z.string().datetime().optional(),
+	categoryId: z
+		.string()
+		.refine(isValidObjectId, { message: "Categoria Inválida" })
+		.optional(),
+	type: z.enum(["expense", "income"]).optional(),
+});
+
+// ✅ adicionar junto aos outros tipos inferidos
+export type UpdateTransactionParams = z.infer<typeof updateTransactionSchema>;
+export type UpdateTransactionBody = z.infer<typeof updateTransactionBodySchema>;
