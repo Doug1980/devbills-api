@@ -4,25 +4,64 @@ import createTransaction from "../controllers/transactions/createTransaction.con
 import { deleteTransaction } from "../controllers/transactions/deleteTransaction.controller";
 import { getTransactions } from "../controllers/transactions/getTransactions.controller";
 import { getTransactionsSummary } from "../controllers/transactions/getTransactionsSummary.controller";
-import { authMiddleware } from "../middlewares/auth.middlewares";
+import { getHistoricalTransactions } from "../controllers/transactions/getHistoricalTransactions.controller";
 import { updateTransaction } from "../controllers/transactions/updateTransaction.controller";
-import {
-	updateTransactionSchema,
-	updateTransactionBodySchema,
-} from "../schemas/transaction.schema";
-
+import { authMiddleware } from "../middlewares/auth.middlewares";
 import {
 	createTransactionSchema,
 	deleteTransactionSchema,
 	getTransactionsSchema,
 	getTransactionsSummarySchema,
 	getHistoricalTransactionsSchema,
+	updateTransactionSchema,
+	updateTransactionBodySchema,
 } from "../schemas/transaction.schema";
 
-import { getHistoricalTransactions } from "../controllers/transactions/getHistoricalTransactions.controller";
-
 const transactionsRoutes = async (fastify: FastifyInstance) => {
-	// ✅ adicionar junto às outras rotas, antes do fechamento da função
+	// ✅ authMiddleware aplicado ANTES de todas as rotas
+	fastify.addHook("preHandler", authMiddleware);
+
+	// Criar
+	fastify.route({
+		method: "POST",
+		url: "/",
+		schema: {
+			body: zodToJsonSchema(createTransactionSchema),
+		},
+		handler: createTransaction,
+	});
+
+	// Buscar com filtro
+	fastify.route({
+		method: "GET",
+		url: "/",
+		schema: {
+			querystring: zodToJsonSchema(getTransactionsSchema),
+		},
+		handler: getTransactions,
+	});
+
+	// Resumo
+	fastify.route({
+		method: "GET",
+		url: "/summary",
+		schema: {
+			querystring: zodToJsonSchema(getTransactionsSummarySchema),
+		},
+		handler: getTransactionsSummary,
+	});
+
+	// Histórico
+	fastify.route({
+		method: "GET",
+		url: "/historical",
+		schema: {
+			querystring: zodToJsonSchema(getHistoricalTransactionsSchema),
+		},
+		handler: getHistoricalTransactions,
+	});
+
+	// ✅ Atualizar — agora protegido pelo authMiddleware
 	fastify.route({
 		method: "PUT",
 		url: "/:id",
@@ -33,49 +72,7 @@ const transactionsRoutes = async (fastify: FastifyInstance) => {
 		handler: updateTransaction,
 	});
 
-	fastify.addHook("preHandler", authMiddleware);
-
-	//Criate
-	fastify.route({
-		method: "POST",
-		url: "/",
-		schema: {
-			body: zodToJsonSchema(createTransactionSchema),
-		},
-		handler: createTransaction,
-	});
-
-	//Search with Filter
-	fastify.route({
-		method: "GET",
-		url: "/",
-		schema: {
-			querystring: zodToJsonSchema(getTransactionsSchema),
-		},
-		handler: getTransactions,
-	});
-
-	//Obter Resumo
-	fastify.route({
-		method: "GET",
-		url: "/summary",
-		schema: {
-			querystring: zodToJsonSchema(getTransactionsSummarySchema),
-		},
-		handler: getTransactionsSummary,
-	});
-
-	//Histórico de transações
-	fastify.route({
-		method: "GET",
-		url: "/historical",
-		schema: {
-			querystring: zodToJsonSchema(getHistoricalTransactionsSchema),
-		},
-		handler: getHistoricalTransactions,
-	});
-
-	//Deletar
+	// Deletar
 	fastify.route({
 		method: "DELETE",
 		url: "/:id",

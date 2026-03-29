@@ -5,7 +5,6 @@ import type { TransactionFilter } from "../../types/transaction.type";
 import prisma from "../../config/prisma";
 import utc from "dayjs/plugin/utc";
 
-// Ative o plugin
 dayjs.extend(utc);
 
 export const getTransactions = async (
@@ -24,11 +23,17 @@ export const getTransactions = async (
 	const filters: TransactionFilter = { userId };
 
 	if (month && year) {
+		// ✅ filtro mensal
 		const startDate = dayjs
 			.utc(`${year}-${month}-01`)
 			.startOf("month")
 			.toDate();
 		const endDate = dayjs.utc(startDate).endOf("month").toDate();
+		filters.date = { gte: startDate, lte: endDate };
+	} else if (year && !month) {
+		// ✅ filtro anual — quando só o year é passado
+		const startDate = dayjs.utc(`${year}-01-01`).startOf("year").toDate();
+		const endDate = dayjs.utc(`${year}-12-31`).endOf("year").toDate();
 		filters.date = { gte: startDate, lte: endDate };
 	}
 
@@ -54,7 +59,11 @@ export const getTransactions = async (
 				},
 			},
 		});
-		reply.send(transactions);
+
+		// ✅ segurança extra contra transações órfãs
+		const validTransactions = transactions.filter((t) => t.category !== null);
+
+		reply.send(validTransactions);
 	} catch (err) {
 		console.error({ err }, "Erro ao obter transações", err);
 		reply.status(500).send({ error: "Erro no servidor" });
