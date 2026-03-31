@@ -34,7 +34,7 @@ export const createCategory = async (
 			data: {
 				name,
 				type,
-				color: type === "income" ? "#37E359" : "#FF5873", // cor padrão por tipo
+				color: type === "income" ? "#37E359" : "#FF5873",
 			},
 		});
 
@@ -47,5 +47,41 @@ export const createCategory = async (
 		}
 		request.log.error("Erro ao criar categoria", err);
 		reply.status(500).send({ error: "Erro ao criar categoria" });
+	}
+};
+
+// ✅ novo endpoint de atualização de categoria
+export const updateCategory = async (
+	request: FastifyRequest,
+	reply: FastifyReply,
+): Promise<void> => {
+	try {
+		const { id } = request.params as { id: string };
+		const { name, color } = request.body as { name?: string; color?: string };
+
+		if (!name && !color) {
+			return reply.status(400).send({ error: "Nome ou cor são obrigatórios" });
+		}
+
+		const category = await prisma.category.update({
+			where: { id },
+			data: {
+				...(name ? { name } : {}),
+				...(color ? { color } : {}),
+			},
+		});
+
+		reply.send(category);
+	} catch (err: any) {
+		if (err.code === "P2002") {
+			return reply
+				.status(409)
+				.send({ error: "Categoria já existe para este tipo" });
+		}
+		if (err.code === "P2025") {
+			return reply.status(404).send({ error: "Categoria não encontrada" });
+		}
+		request.log.error("Erro ao atualizar categoria", err);
+		reply.status(500).send({ error: "Erro ao atualizar categoria" });
 	}
 };
