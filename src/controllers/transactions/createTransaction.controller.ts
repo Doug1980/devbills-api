@@ -4,7 +4,7 @@ import { createTransactionSchema } from "../../schemas/transaction.schema";
 import prisma from "../../config/prisma";
 
 // ✅ limite diário de transações por usuário
-const DAILY_TRANSACTION_LIMIT = 30;
+const DAILY_TRANSACTION_LIMIT = 120;
 
 const createTransaction = async (
 	request: FastifyRequest,
