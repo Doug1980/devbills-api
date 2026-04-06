@@ -66,7 +66,7 @@ O **DevBills API** é o back-end de uma aplicação de controle financeiro pesso
 - [Docker](https://www.docker.com/) e Docker Compose
 
 ### Passo a passo
-
+```bash
 # Clone o repositório
 git clone https://github.com/Doug1980/devbills-api.git
 cd devbills-api
