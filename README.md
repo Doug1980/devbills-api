@@ -149,6 +149,6 @@ A API está disponível em produção. Acesse:
 
 ## 👨‍💻 Autor
 
-Feito por **Douglas** — em transição de Júnior para Pleno 🚀
+Feito por **Douglas** — Desenvolvedor Full Stack 🚀
 
 [![GitHub](https://img.shields.io/badge/GitHub-Doug1980-181717?style=flat&logo=github)](https://github.com/Doug1980)
