@@ -146,7 +146,7 @@ JWT_EXPIRES_IN=7d
 
 A API está disponível em produção. Acesse:
 
-> 🔗 `https://seu-link-de-deploy.com` *(atualize com o link real)*
+> 🔗 `https://devbills-frontend-xi.vercel.app/` *(atualize com o link real)*
 
 ---
 
