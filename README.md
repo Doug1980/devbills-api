@@ -66,6 +66,7 @@ O **DevBills API** é o back-end de uma aplicação de controle financeiro pesso
 - [Docker](https://www.docker.com/) e Docker Compose
 
 ### Passo a passo
+
 ```bash
 # Clone o repositório
 git clone https://github.com/Doug1980/devbills-api.git
@@ -114,12 +115,14 @@ JWT_EXPIRES_IN=7d
 ## 📡 Endpoints
 
 ### Auth
+
 | Método | Rota | Descrição |
 |---|---|---|
 | `POST` | `/auth/register` | Cadastro de usuário |
 | `POST` | `/auth/login` | Login e geração do token |
 
 ### Transações
+
 | Método | Rota | Descrição |
 |---|---|---|
 | `GET` | `/transactions` | Lista transações do usuário |
@@ -128,6 +131,7 @@ JWT_EXPIRES_IN=7d
 | `DELETE` | `/transactions/:id` | Remove transação |
 
 ### Categorias
+
 | Método | Rota | Descrição |
 |---|---|---|
 | `GET` | `/categories` | Lista categorias |
