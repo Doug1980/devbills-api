@@ -73,7 +73,7 @@ git clone https://github.com/Doug1980/devbills-api.git
 cd devbills-api
 
 # Instale as dependências
-yarn install
+npm install
 
 # Configure as variáveis de ambiente
 cp .env.example .env
@@ -83,10 +83,10 @@ cp .env.example .env
 docker-compose up -d
 
 # Execute as migrations (se aplicável)
-yarn prisma migrate dev
+npx prisma migrate dev
 
 # Inicie o servidor em modo desenvolvimento
-yarn dev
+npm run dev
 ```
 
 O servidor estará disponível em `http://localhost:3000`
@@ -115,14 +115,12 @@ JWT_EXPIRES_IN=7d
 ## 📡 Endpoints
 
 ### Auth
-
 | Método | Rota | Descrição |
 |---|---|---|
 | `POST` | `/auth/register` | Cadastro de usuário |
 | `POST` | `/auth/login` | Login e geração do token |
 
 ### Transações
-
 | Método | Rota | Descrição |
 |---|---|---|
 | `GET` | `/transactions` | Lista transações do usuário |
@@ -131,7 +129,6 @@ JWT_EXPIRES_IN=7d
 | `DELETE` | `/transactions/:id` | Remove transação |
 
 ### Categorias
-
 | Método | Rota | Descrição |
 |---|---|---|
 | `GET` | `/categories` | Lista categorias |
@@ -152,6 +149,6 @@ A API está disponível em produção. Acesse:
 
 ## 👨‍💻 Autor
 
-Feito por **Douglas** — Desenvolvedor Full Stack 🚀
+Feito por **Douglas** — em transição de Júnior para Pleno 🚀
 
 [![GitHub](https://img.shields.io/badge/GitHub-Doug1980-181717?style=flat&logo=github)](https://github.com/Doug1980)
