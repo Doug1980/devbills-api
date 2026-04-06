@@ -67,13 +67,12 @@ O **DevBills API** é o back-end de uma aplicação de controle financeiro pesso
 
 ### Passo a passo
 
-```bash
 # Clone o repositório
 git clone https://github.com/Doug1980/devbills-api.git
 cd devbills-api
 
 # Instale as dependências
-npm install
+yarn install
 
 # Configure as variáveis de ambiente
 cp .env.example .env
@@ -83,10 +82,10 @@ cp .env.example .env
 docker-compose up -d
 
 # Execute as migrations (se aplicável)
-npx prisma migrate dev
+yarn prisma migrate dev
 
 # Inicie o servidor em modo desenvolvimento
-npm run dev
+yarn dev
 ```
 
 O servidor estará disponível em `http://localhost:3000`
